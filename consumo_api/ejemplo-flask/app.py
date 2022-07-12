@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import requests
 import json
+from config import user, passw
 
 app = Flask(__name__, template_folder='templates')
 
@@ -11,10 +12,10 @@ def hello_world():
 
 @app.route("/losestudiantes")
 def los_estudiantes():
-    """
+    """ 
     """
     r = requests.get("http://127.0.0.1:8000/api/estudiantes/",
-            auth=('user', 'pass'))
+            auth=(user, passw))
     estudiantes = json.loads(r.content)['results']
     numero_estudiantes = json.loads(r.content)['count']
     return render_template("losestudiantes.html", estudiantes=estudiantes,
@@ -26,7 +27,7 @@ def los_telefonos():
     """
     """
     r = requests.get("http://127.0.0.1:8000/api/numerost/",
-            auth=('user', 'pass'))
+            auth=(user, passw))
     datos = json.loads(r.content)['results']
     numero = json.loads(r.content)['count']
     return render_template("lostelefonos.html", datos=datos,
@@ -38,7 +39,7 @@ def los_telefonos_dos():
     """
     """
     r = requests.get("http://127.0.0.1:8000/api/numerost/",
-            auth=('user', 'pass'))
+            auth=(user, passw))
     datos = json.loads(r.content)['results']
     numero = json.loads(r.content)['count']
     datos2 = []
@@ -53,6 +54,9 @@ def los_telefonos_dos():
 def obtener_estudiante(url):
     """
     """
-    r = requests.get(url, auth=('user', 'pass'))
+    r = requests.get(url, auth=(user, passw))
     nombre_estudiante = json.loads(r.content)['nombre']
-    return nombre_estudiante
+    apellido_estudiante = json.loads(r.content)['apellido']
+    # salida = nombre_estudiante + " "+ apellido_estudiante
+    cadena = "%s %s" % (nombre_estudiante,apellido_estudiante)
+    return cadena
