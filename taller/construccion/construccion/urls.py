@@ -32,7 +32,6 @@ router.register(r'departame', views.DepartamentoViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
         path('', include('administracion.urls')),
-        path('accounts/', include('allauth.urls')),
         path('api/', include(router.urls)),
         path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 
